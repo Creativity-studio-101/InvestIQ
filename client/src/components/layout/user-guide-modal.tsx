@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { BarChart3, CheckCircle } from "lucide-react";
 
@@ -30,7 +30,7 @@ export default function UserGuideModal({ open, onClose }: UserGuideModalProps) {
           <div className="w-16 h-16 bg-[#00d4aa]/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <BarChart3 className="text-[#00d4aa] text-2xl" />
           </div>
-          <h2 className="text-2xl font-semibold mb-2">Welcome to Portfolio Analyzer</h2>
+          <DialogTitle className="text-2xl font-semibold mb-2">Welcome to Portfolio Analyzer</DialogTitle>
           <p className="text-[#8b949e]">Get comprehensive insights into your investment portfolio</p>
         </DialogHeader>
         

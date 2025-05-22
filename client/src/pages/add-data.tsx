@@ -1,12 +1,12 @@
-import { useRouter } from "wouter";
+import { useLocation } from "wouter";
 import PortfolioForm from "@/components/portfolio/portfolio-form";
 import PortfolioTable from "@/components/portfolio/portfolio-table";
 
 export default function AddData() {
-  const [, navigate] = useRouter();
+  const [, setLocation] = useLocation();
 
   const handleAnalyze = () => {
-    navigate("/report");
+    setLocation("/report");
   };
 
   return (

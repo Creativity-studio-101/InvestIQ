@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRouter } from "wouter";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useUploadCSV } from "@/hooks/use-portfolio";
@@ -7,7 +7,7 @@ import { parseCSV, validatePortfolioData } from "@/lib/financial-calculations";
 import { Upload, CloudUpload, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function UploadCSV() {
-  const [, navigate] = useRouter();
+  const [, setLocation] = useLocation();
   const [uploadedData, setUploadedData] = useState<any[]>([]);
   const [validationResults, setValidationResults] = useState<any>(null);
   const [showPreview, setShowPreview] = useState(false);
@@ -35,7 +35,7 @@ export default function UploadCSV() {
     if (validationResults?.valid.length > 0) {
       uploadCSV.mutate(validationResults.valid, {
         onSuccess: () => {
-          navigate("/report");
+          setLocation("/report");
         }
       });
     }

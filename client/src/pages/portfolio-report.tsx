@@ -58,20 +58,59 @@ export default function PortfolioReport() {
   const assetAllocation = calculateAssetAllocation(analysis.portfolio);
   const performanceData = generatePerformanceData(analysis.portfolio);
 
-  const optimizationResult = {
-    expectedReturn: 14.2,
-    expectedRisk: 12.8,
-    sharpeRatio: 1.11,
-    allocation: [
-      { asset: "Large Cap Stocks", percentage: 45 },
-      { asset: "Mid Cap Stocks", percentage: 25 },
-      { asset: "Small Cap Stocks", percentage: 15 },
-      { asset: "International Equity", percentage: 10 },
-      { asset: "Bonds", percentage: 5 }
-    ]
+  const generateOptimizationResult = () => {
+    // Dynamic calculation based on settings
+    const baseReturn = optimizationSettings.goal === "max_return" ? 16.5 : 
+                      optimizationSettings.goal === "max_sharpe" ? 14.2 : 12.8;
+    const riskMultiplier = optimizationSettings.riskTolerance / 10;
+    const horizonMultiplier = optimizationSettings.horizon === "long" ? 1.2 : 
+                            optimizationSettings.horizon === "medium" ? 1.0 : 0.8;
+    
+    const expectedReturn = baseReturn * horizonMultiplier;
+    const expectedRisk = 15 * riskMultiplier;
+    const sharpeRatio = expectedReturn / expectedRisk;
+    
+    // Dynamic allocation based on risk tolerance and goal
+    let allocation;
+    if (optimizationSettings.goal === "max_return") {
+      allocation = [
+        { asset: "Large Cap Stocks", percentage: 35 + optimizationSettings.riskTolerance * 2 },
+        { asset: "Mid Cap Stocks", percentage: 25 + optimizationSettings.riskTolerance },
+        { asset: "Small Cap Stocks", percentage: 20 + optimizationSettings.riskTolerance },
+        { asset: "International Equity", percentage: 15 },
+        { asset: "Bonds", percentage: Math.max(5, 25 - optimizationSettings.riskTolerance * 3) }
+      ];
+    } else if (optimizationSettings.goal === "min_risk") {
+      allocation = [
+        { asset: "Large Cap Stocks", percentage: 50 - optimizationSettings.riskTolerance },
+        { asset: "Mid Cap Stocks", percentage: 20 },
+        { asset: "Small Cap Stocks", percentage: Math.max(5, 15 - optimizationSettings.riskTolerance) },
+        { asset: "International Equity", percentage: 10 },
+        { asset: "Bonds", percentage: 15 + optimizationSettings.riskTolerance * 2 }
+      ];
+    } else {
+      allocation = [
+        { asset: "Large Cap Stocks", percentage: 40 },
+        { asset: "Mid Cap Stocks", percentage: 25 },
+        { asset: "Small Cap Stocks", percentage: 15 },
+        { asset: "International Equity", percentage: 10 + optimizationSettings.riskTolerance },
+        { asset: "Bonds", percentage: 10 }
+      ];
+    }
+    
+    return {
+      expectedReturn: expectedReturn,
+      expectedRisk: expectedRisk,
+      sharpeRatio: sharpeRatio,
+      allocation: allocation
+    };
   };
 
+  const [optimizationResult, setOptimizationResult] = useState(generateOptimizationResult());
+
   const handleOptimize = () => {
+    const newResult = generateOptimizationResult();
+    setOptimizationResult(newResult);
     setShowOptimization(true);
   };
 

@@ -105,13 +105,23 @@ export default function UploadCSV() {
                   </label>
                 </div>
 
-                <Button 
-                  onClick={() => document.getElementById('csvFileInput')?.click()}
-                  className="bg-[#0f3460] hover:bg-[#0f3460]/80 text-[#e4e6ea] px-8 py-3 font-medium"
-                >
-                  <Upload className="mr-2 h-4 w-4" />
-                  Choose File
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button 
+                    onClick={() => document.getElementById('csvFileInput')?.click()}
+                    className="bg-[#0f3460] hover:bg-[#0f3460]/80 text-[#e4e6ea] px-8 py-3 font-medium"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    Choose File
+                  </Button>
+                  <Button 
+                    onClick={handleDownloadDemoCSV}
+                    variant="outline"
+                    className="border-[#00d4aa] text-[#00d4aa] hover:bg-[#00d4aa]/10 px-8 py-3 font-medium"
+                  >
+                    <CloudUpload className="mr-2 h-4 w-4" />
+                    Download Demo CSV
+                  </Button>
+                </div>
               </CardContent>
             </Card>
 

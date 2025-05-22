@@ -28,6 +28,7 @@ export default function UploadCSV() {
       setShowPreview(true);
     } catch (error) {
       console.error("Error parsing CSV:", error);
+      alert(`Failed to parse CSV file: ${error instanceof Error ? error.message : 'Please check the file format and try again.'}`);
     }
   };
 

@@ -1,0 +1,182 @@
+You are to create a responsive, modern, and visually appealing portfolio analysis website for Indian investors using HTML, CSS, JavaScript, and Python (Flask for backend APIs where necessary). The website will be hosted on GitHub Pages, so ensure frontend pages are self-contained and compatible. Backend services (if needed) can be designed separately. The website will feature multiple sections as described below.
+
+📌 Pages and Features
+1️⃣ Home Page
+Top navbar with buttons for:
+
+Home
+
+News
+
+Analyze Portfolio
+
+Hero Section: Large, clean hero image banner with tagline: "Smart Portfolio Management for Indian Investors."
+
+Major Indices Section: Display real-time/index values for NIFTY 50, SENSEX, NIFTY BANK using live market APIs (like NSE India APIs or FinancialModelingPrep API if public).
+
+Top Gainers & Top Losers: Two side-by-side sections showing top 5 Indian stocks gaining and losing (with price, change %, and company name).
+
+Crypto Prices: Display Bitcoin, Ethereum, Solana, and any other major coins' live prices.
+
+Latest Financial News Section:
+
+Fetch latest 5 news headlines with source and publish time via trusted APIs (like NewsAPI or RSS feeds from Moneycontrol, Business Standard, or Economic Times).
+
+Each news will have a View More button leading to the dedicated News Page.
+
+A See All News button takes to the News Page.
+
+2️⃣ News Page
+Clean, card-based layout.
+
+Two categories:
+
+Indian Financial News
+
+International Financial News
+
+Cards for each news item containing:
+
+Image thumbnail (if available)
+
+Title
+
+Summary (2–3 lines)
+
+Source & time
+
+Read More button redirecting to the source link.
+
+Smooth transitions, animations on hover.
+
+3️⃣ Analyze Page
+Navbar accessible.
+
+On page load:
+
+Floating window/modal user guide with instructions on how to use the portfolio analysis tool.
+
+Continue button to close the guide and move to options.
+
+Two Option Cards:
+
+Add Data Manually
+
+Upload CSV
+
+Each option redirects to its dedicated page.
+
+4️⃣ Add Data Page
+Form for:
+
+Stock name (dropdown suggestive input — as user types, list Indian stocks using API or local JSON dataset).
+
+Number of units.
+
+Buying price.
+
+Purchase date.
+
+Type: Stock, SIP, Crypto (dropdown)
+
+Show current market price (fetched via API as user selects a stock/crypto).
+
+Option to Add to Portfolio.
+
+Below the form: A table displaying current portfolio items added.
+
+Option to delete any entry.
+
+Continue button to move to report generation.
+
+5️⃣ Upload CSV Page
+Simple form to upload CSV.
+
+Accept predefined format:
+
+pgsql
+Copy
+Edit
+Name, Units, Buying Price, Purchase Date, Type
+After uploading, validate and parse the data.
+
+Show parsed data in a table for user confirmation before proceeding.
+
+6️⃣ Portfolio Report Page
+Portfolio Summary:
+
+Total Invested
+
+Current Value
+
+Total Profit/Loss
+
+Return (%)
+
+Asset Allocation Pie Chart
+
+Portfolio Performance Analysis
+
+Risk Analysis:
+
+Beta
+
+Sharpe Ratio
+
+Max Drawdown
+
+Standard Deviation
+
+Volatility
+
+Total Profit/Loss
+
+Historical Performance Graph
+
+Portfolio Optimizer
+
+User can select:
+
+Optimization Goal (Max Return, Max Sharpe, Min Risk)
+
+Risk Tolerance (slider)
+
+Investment Horizon (dropdown)
+
+On submit: Display optimized allocation, expected return, risk, and comparison chart.
+
+Option to Download Portfolio Report (PDF or CSV)
+
+📌 Technical Notes
+Frontend:
+
+Use HTML5, CSS3 (Tailwind CSS or Bootstrap for responsiveness), JavaScript (Chart.js for graphs, Fetch API for APIs)
+
+Backend (if needed):
+
+Python (Flask) for portfolio calculations, risk analysis metrics, and CSV processing.
+
+APIs for stock/crypto data, news (integrate FinancialModelingPrep, NSE India unofficial API, or NewsAPI)
+
+Deploy frontend via GitHub Pages.
+
+Host backend separately if needed, or use public APIs wherever possible.
+
+📌 Example UI/UX Inspiration
+Like the attached image 0d9ef1a1-eff6-43aa-80a2-553fcef6310e.png
+
+Modern dark-themed dashboard layout with sidebars, cards, graphs, and floating modals.
+
+📌 Deliverables
+Clean, documented code.
+
+Separate folders for:
+
+/static (CSS, JS)
+
+/templates (HTML)
+
+/api (Python scripts if backend)
+
+Compatible to deploy frontend on GitHub Pages.
+

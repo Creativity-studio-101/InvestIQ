@@ -25,40 +25,58 @@ export const calculateTotalInvestment = (units: number, price: number): number =
 };
 
 export const parseCSV = (csvText: string): any[] => {
-  const lines = csvText.trim().split('\n');
-  if (lines.length < 2) throw new Error('CSV must have header and at least one data row');
-  
-  const headers = lines[0].split(',').map(h => h.trim());
-  const expectedHeaders = ['Name', 'Units', 'Buying Price', 'Purchase Date', 'Type'];
-  
-  // Validate headers
-  const hasAllHeaders = expectedHeaders.every(expected => 
-    headers.some(header => header.toLowerCase() === expected.toLowerCase())
-  );
-  
-  if (!hasAllHeaders) {
-    throw new Error(`CSV must contain headers: ${expectedHeaders.join(', ')}`);
-  }
-  
-  const data = [];
-  for (let i = 1; i < lines.length; i++) {
-    const values = lines[i].split(',').map(v => v.trim());
-    if (values.length !== headers.length) continue;
+  try {
+    const lines = csvText.trim().split('\n').filter(line => line.trim());
+    if (lines.length < 2) throw new Error('CSV must have header and at least one data row');
     
-    const row: any = {};
-    headers.forEach((header, index) => {
-      const normalizedHeader = header.toLowerCase();
-      if (normalizedHeader === 'name') row.name = values[index];
-      else if (normalizedHeader === 'units') row.units = values[index];
-      else if (normalizedHeader === 'buying price') row.buyingPrice = values[index];
-      else if (normalizedHeader === 'purchase date') row.purchaseDate = values[index];
-      else if (normalizedHeader === 'type') row.type = values[index];
+    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    const expectedHeaders = ['Name', 'Units', 'Buying Price', 'Purchase Date', 'Type'];
+    
+    // More flexible header validation
+    const headerMapping: any = {};
+    expectedHeaders.forEach(expected => {
+      const found = headers.find(header => 
+        header.toLowerCase().includes(expected.toLowerCase()) ||
+        expected.toLowerCase().includes(header.toLowerCase())
+      );
+      if (found) {
+        headerMapping[expected] = headers.indexOf(found);
+      }
     });
     
-    data.push(row);
+    if (Object.keys(headerMapping).length < expectedHeaders.length) {
+      throw new Error(`CSV must contain headers: ${expectedHeaders.join(', ')}`);
+    }
+    
+    const data = [];
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+      
+      // Better CSV parsing handling quotes and commas
+      const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
+      
+      if (values.length < Math.max(...Object.values(headerMapping)) + 1) continue;
+      
+      const row: any = {
+        name: values[headerMapping['Name']] || '',
+        units: values[headerMapping['Units']] || '',
+        buyingPrice: values[headerMapping['Buying Price']] || '',
+        purchaseDate: values[headerMapping['Purchase Date']] || '',
+        type: values[headerMapping['Type']] || ''
+      };
+      
+      // Skip empty rows
+      if (row.name && row.units && row.buyingPrice && row.purchaseDate && row.type) {
+        data.push(row);
+      }
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('CSV parsing error:', error);
+    throw new Error(`Failed to parse CSV: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
-  
-  return data;
 };
 
 export const validatePortfolioData = (data: any[]): { valid: any[], invalid: any[], errors: string[] } => {

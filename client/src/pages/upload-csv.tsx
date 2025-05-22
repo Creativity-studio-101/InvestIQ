@@ -47,6 +47,30 @@ export default function UploadCSV() {
     setShowPreview(false);
   };
 
+  const handleDownloadDemoCSV = () => {
+    const demoData = [
+      'Name,Units,Buying Price,Purchase Date,Type',
+      'Reliance Industries,100,2456.75,2023-01-15,Stock',
+      'HDFC Bank,50,1678.90,2023-02-20,Stock',
+      'Tata Consultancy Services,25,3892.40,2023-03-10,Stock',
+      'Infosys,75,1456.80,2023-04-05,Stock',
+      'HDFC Equity Fund,200,45.50,2023-05-15,SIP',
+      'Bitcoin,0.5,2500000,2023-06-10,Crypto',
+      'Ethereum,2,150000,2023-07-20,Crypto',
+      'Bajaj Finance,30,6789.25,2023-08-15,Stock',
+      'Adani Enterprises,40,2234.50,2023-09-10,Stock',
+      'SBI Large Cap Fund,300,25.75,2023-10-05,SIP'
+    ].join('\n');
+    
+    const blob = new Blob([demoData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'demo-portfolio.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="min-h-screen bg-[#1a1a2e] px-8 py-8">
       <div className="mb-8">

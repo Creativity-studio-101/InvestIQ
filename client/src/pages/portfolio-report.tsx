@@ -106,7 +106,7 @@ export default function PortfolioReport() {
     };
   };
 
-  const [optimizationResult, setOptimizationResult] = useState(generateOptimizationResult());
+  const [optimizationResult, setOptimizationResult] = useState(() => generateOptimizationResult());
 
   const handleOptimize = () => {
     const newResult = generateOptimizationResult();
